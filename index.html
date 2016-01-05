@@ -1,45 +1,155 @@
 <!DOCTYPE html>
 <html lang="en-US">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- Angular JS -->
 <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
 <!-- Firebase -->
 <script src="https://cdn.firebase.com/js/client/2.2.4/firebase.js"></script>
 <!-- AngularFire -->
 <script src="https://cdn.firebase.com/libs/angularfire/1.1.3/angularfire.min.js"></script>
-<!-- UI Bootstrap -->
-<script src="js/ui-bootstrap-tpls-0.14.3.min.js"></script>
 <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+<!-- UI Bootstrap -->
+<script src="js/ui-bootstrap-tpls-0.14.3.min"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+  $('[data-toggle=sidebar]').click(function() {
+    $('.row-sidebar').toggleClass('active');
+
+    $('#sidebar').css({'left': '-41.6%'});
+    $('#sidebar').toggle();
+
+    $('#sidebar').animate({left: '0'}, 200);
+  });
+});
+</script>
+<style>
+body {
+  padding-top: 51px;
+}
+.text-center {
+  padding-top: 20px;
+}
+.col-xs-12 {
+  background-color: #fff;
+}
+.navbar-default .navbar-brand:hover {
+  color: #D94364;
+}
+.navbar-default .navbar-brand {
+  color: #fff;
+}
+.navbar-default {
+  background: #38A5C9;
+}
+.navbar-default .navbar-toggle {
+  background: #fff;
+}
+#sidebar {
+  height: 100%;
+  padding-right: 0;
+  padding-top: 20px;
+}
+#sidebar .nav {
+  width: 95%;
+}
+#sidebar li {
+  border:0 #f2f2f2 solid;
+  border-bottom-width:1px;
+}
+
+/* collapsed sidebar styles */
+@media screen and (max-width: 767px) {
+  .row-sidebar {
+    position: relative;
+    -webkit-transition: all 0.25s ease-out;
+    -moz-transition: all 0.25s ease-out;
+    transition: all 0.25s ease-out;
+  }
+  .sidebar-left {
+    position: absolute;
+    top: 0;
+    width: 41.6%;
+  }
+  #sidebar {
+    background-color:#3b3b3b;
+    padding-top:0;
+    position: fixed;
+    left: 0;
+    z-index: 9999;
+    display: none;
+  }
+  #sidebar .nav>li {
+    color: #ddd;
+    background: linear-gradient(#3E3E3E, #383838);
+    border-top: 1px solid #484848;
+    border-bottom: 1px solid #2E2E2E;
+  }
+  #sidebar .nav>li:first-child {
+    border-top:0;
+  }
+  #sidebar .nav>li>a {
+    color: #ddd;
+  }
+  #sidebar .nav>li>a>img {
+    max-width: 14px;
+  }
+  #sidebar .nav>li>a:hover, #sidebar .nav>li>a:focus {
+    text-decoration: none;
+    background: linear-gradient(#373737, #323232);
+    color: #fff;  
+  }
+  #sidebar .nav .caret {
+    border-top-color: #fff;
+    border-bottom-color: #fff;
+  }
+  #sidebar .nav a:hover .caret{
+    border-top-color: #fff;
+    border-bottom-color: #fff;
+  }
+}
+
+
+  </style>
 <body>
-
-<div ng-app="myApp" ng-controller="myCtrl">
-
-  <h4>Single toggle</h4>
-    <pre>{{singleModel}}</pre>
-    <button type="button" class="btn btn-primary" ng-model="singleModel" uib-btn-checkbox btn-checkbox-true="1" btn-checkbox-false="0">
-        Single Toggle
-    </button>
-    <h4>Checkbox</h4>
-    <pre>Model: {{checkModel}}</pre>
-    <pre>Results: {{checkResults}}</pre>
-    <div class="btn-group">
-        <label class="btn btn-primary" ng-model="checkModel.left" uib-btn-checkbox>Left</label>
-        <label class="btn btn-primary" ng-model="checkModel.middle" uib-btn-checkbox>Middle</label>
-        <label class="btn btn-primary" ng-model="checkModel.right" uib-btn-checkbox>Right</label>
+<div class="page-container">
+  
+  <!-- top navbar -->
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+       <div class="container">
+      <div class="navbar-header">
+           <button type="button" class="navbar-toggle" data-toggle="sidebar">
+             <span class="icon-bar"></span>
+             <span class="icon-bar"></span>
+             <span class="icon-bar"></span>
+           </button>
+           <a class="navbar-brand" href="#">The List</a>
+      </div>
+       </div>
     </div>
-    <h4>Radio &amp; Uncheckable Radio</h4>
-    <pre>{{radioModel || 'null'}}</pre>
-    <div class="btn-group">
-        <label class="btn btn-primary" ng-model="radioModel" uib-btn-radio="'Left'">Left</label>
-        <label class="btn btn-primary" ng-model="radioModel" uib-btn-radio="'Middle'">Middle</label>
-        <label class="btn btn-primary" ng-model="radioModel" uib-btn-radio="'Right'">Right</label>
-    </div>
-    <div class="btn-group">
-        <label class="btn btn-success" ng-model="radioModel" uib-btn-radio="'Left'" uncheckable>Left</label>
-        <label class="btn btn-success" ng-model="radioModel" uib-btn-radio="'Middle'" uncheckable>Middle</label>
-        <label class="btn btn-success" ng-model="radioModel" uib-btn-radio="'Right'" uncheckable>Right</label>
-    </div>
-
-</div>
+      
+    <div class="container">
+      <div class="row row-sidebar">
+        <!-- sidebar -->
+        <div class="col-xs-6 col-sm-3 sidebar-left" id="sidebar" role="navigation">
+            <ul class="nav">
+              <li class="active"><a href="#">Today</a></li>
+              <li><a href="#">Tomorrow</a></li>
+              <li><a href="#">Thursday</a></li>
+              <li><a href="#">Friday</a></li>   
+              <li><a href="#">Saturday</a></li>   
+              <li><a href="#">Sunday</a></li>   
+            </ul>
+        </div>
+    
+        <!-- main area -->
+        <div class="col-xs-12 col-sm-9">
+          <h1>Simple Task Management</h1>
+          Demo Content          
+        </div><!-- /.col-xs-12 main -->
+    </div><!--/.row-->
+  </div><!--/.container-->
+</div><!--/.page-container-->
 
 <script>
 var app = angular.module('myApp', ['ui.bootstrap', 'firebase']);
