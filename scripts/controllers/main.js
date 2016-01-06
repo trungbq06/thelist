@@ -5,8 +5,13 @@ app.controller('mainController', function($scope, $firebaseObject) {
   $scope.noteList = [];
 
   $scope.add = function() {
-		$scope.noteList.push({noteText:$scope.noteInput, done:false});
-		$scope.noteInput = "";
+    var text = $scope.noteInput;
+    text = text.trim();
+    if (text.length > 0) {
+  		$scope.noteList.push({noteText:$scope.noteInput, done:false});
+    }
+
+    $scope.noteInput = "";
 	};
 
 	$scope.remove = function() {

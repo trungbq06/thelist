@@ -1,0 +1,27 @@
+/* line 1, ../scss/style.scss */
+#app-container {
+  background: #fafafa;
+}
+
+/* line 4, ../scss/style.scss */
+#content {
+  background: #fff;
+}
+
+/* line 7, ../scss/style.scss */
+ul.things li {
+  text-align: left;
+  list-style: none;
+  cursor: pointer;
+}
+
+/* line 12, ../scss/style.scss */
+.main-input .date {
+  width: 150px;
+}
+
+/* line 15, ../scss/style.scss */
+.buttons {
+  margin: 10px 0;
+  text-align: left;
+}

@@ -31,4 +31,6 @@ $(document).ready(function() {
       $('#sidebar').hide();
     }
   });
+
+  $('#datepicker').datepicker({});
 });

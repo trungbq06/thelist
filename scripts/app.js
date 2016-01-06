@@ -1,5 +1,5 @@
 
-var app = angular.module('listApp', ['ui.bootstrap', 'firebase', 'ngRoute']);
+var app = angular.module('listApp', ['firebase', 'ngRoute']);
 
 app.config(function($routeProvider) {
   $routeProvider

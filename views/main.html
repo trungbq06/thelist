@@ -1,12 +1,26 @@
-<div ng-controller="mainController" class="jumbotron text-center">
-    <h1>Home Page</h1>
-
+<div ng-controller="mainController" class="text-center">
+	<br>
     <form ng-submit="add()">
-	    <input type="text" ng-model="noteInput" size="50" placeholder="Add New">
-	    <input type="submit" value="Add New">
+    	<div class="input-group main-input">
+	    	<input type="text" ng-model="noteInput" class="form-control task" size="50" placeholder="Add Task">
+	    	<div class="input-group-btn">
+	    		<input type="text" size="50" class="form-control date" id="datepicker">
+	    	</div>
+	    </div>
+	    <div class="buttons">
+	    	<button type="button" class="btn btn-info">Add Task</button>
+	    	<button type="button" class="btn btn-link">Cancel</button>
+	    </div>
 	</form>
 
-	<div ng-repeat="x in noteList">
-	    <input type="checkbox" ng-model="x.done"> <span ng-bind="x.noteText"></span>
-	</div>
+	<ul ng-repeat="x in noteList" class="things">
+		<li>
+			<div class="checkbox checkbox-circle">
+	            <input id="checkbox1" class="styled" ng-model="x.done" type="checkbox">
+	            <label for="checkbox1">
+	                {{x.noteText}}
+	            </label>
+	        </div>
+		</li>
+	</ul>
 </div>
