@@ -5,10 +5,11 @@ app.controller('mainController', function($scope, $firebaseArray) {
 
   $scope.add = function() {
     var text = $scope.task;
+    console.log($scope.date);
     text = text.trim();
     if (text.length > 0) {
   		$scope.tasks.$add({
-        task:text, 
+        task:text,
         date:$scope.date,
         done:false
       });
@@ -27,40 +28,34 @@ app.controller('mainController', function($scope, $firebaseArray) {
 	};
 });
 
-app.directive('mydatepicker', function($parse) {
+app.directive('myDirective', function($compile) {
   return {
     restrict: 'E',
+    scope: {
+      myDirectiveVar: '=',
+    },
+    template: '<input class="form-control date" ng-model="myDirectiveVar" value="123">',
     replace: true,
-    transclude: false,
-    compile: function(element, attrs) {
-      var modelAccessor = $parse(attrs.ngModel);
+    link: function($scope, elem, attr, ctrl) {
+      $(elem).val('Testing');
+    }
+  };
+});
 
-      var html = '<input type="text" size="50" class="form-control date" id="datepicker" ng-model="date" />';
-
-      var newElem = $(html);
-      element.replaceWith(newElem);
-
-      return function(scope, element, attrs, controller) {
-        var processChange = function () {
-           var date = new Date(element.datepicker("getDate"));
-
-           scope.$apply(function (scope) {
-              // Change bound variable
-              modelAccessor.assign(scope, date);
-           });
-        };
-
-        $(element).datepicker({
-          startDate: new Date(),
-          todayHighlight: true,
-          autoclose: true          
-        });
-
-        scope.$watch(modelAccessor, function (val) {
-           var date = new Date(val);
-           // element.datepicker();
-        });
-      }
+app.directive('mydatepicker', function($parse) {
+  return {
+    restrict: 'E',    
+    scope:{
+      varDate:'='
+    },
+    template: '<input type="text" size="50" class="form-control date" ng-model="varDate" />',
+    replace: true,
+    link: function($scope, elem, attr, ctrl) {
+      // $(elem).datepicker({
+      //   startDate: new Date(),
+      //   todayHighlight: true,
+      //   autoclose: true          
+      // });
     }
   }
 });
