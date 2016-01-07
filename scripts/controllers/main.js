@@ -1,24 +1,28 @@
-app.controller('mainController', function($scope, $firebaseObject) {
-  var ref = new Firebase("https://thetodo.firebaseio.com");
+app.controller('mainController', function($scope, $firebaseArray) {
+  var ref = new Firebase("https://thetodo.firebaseio.com/tasks");
   // download the data into a local object
-  $scope.noteList = $firebaseObject(ref);
-  console.log($scope.noteList);
+  $scope.tasks = $firebaseArray(ref);
 
   $scope.add = function() {
-    var text = $scope.noteInput;
+    var text = $scope.task;
     text = text.trim();
     if (text.length > 0) {
-  		$scope.noteList.push({noteText:$scope.noteInput, done:false});
+  		$scope.tasks.$add({
+        task:text, 
+        date:$scope.date,
+        done:false
+      });
     }
 
-    $scope.noteInput = "";
+    $scope.task = "";
+    $scope.date = "";
 	};
 
 	$scope.remove = function() {
-		var oldList = $scope.noteList;
-		$scope.noteList = [];
+		var oldList = $scope.tasks;
+		$scope.tasks = [];
 		angular.forEach(oldList, function(x) {
-		    if (!x.done) $scope.noteList.push(x);
+		    if (!x.done) $scope.tasks.push(x);
 		});
 	};
 });
@@ -31,7 +35,7 @@ app.directive('mydatepicker', function($parse) {
     compile: function(element, attrs) {
       var modelAccessor = $parse(attrs.ngModel);
 
-      var html = '<input type="text" size="50" class="form-control date" id="datepicker" />';
+      var html = '<input type="text" size="50" class="form-control date" id="datepicker" ng-model="date" />';
 
       var newElem = $(html);
       element.replaceWith(newElem);
