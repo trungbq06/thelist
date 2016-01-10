@@ -4,10 +4,17 @@
 #content {
   background: #fff;
 }
+ul.things {
+  padding: 10px 0;
+}
+ul.things li:hover {
+  background: #E6E6E6;
+}
 ul.things li {
 	text-align: left;
-    list-style: none;
-    cursor: pointer;
+  list-style: none;
+  cursor: pointer;
+  padding: 6px;
 }
 .main-input .date {
 	width: 150px;
@@ -15,4 +22,7 @@ ul.things li {
 .buttons {
 	margin: 10px 0;
 	text-align: left;
+}
+.checkbox label {
+  width: 100%;
 }

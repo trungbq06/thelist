@@ -9,19 +9,35 @@
 }
 
 /* line 7, ../scss/style.scss */
+ul.things {
+  padding: 10px 0;
+}
+
+/* line 10, ../scss/style.scss */
+ul.things li:hover {
+  background: #E6E6E6;
+}
+
+/* line 13, ../scss/style.scss */
 ul.things li {
   text-align: left;
   list-style: none;
   cursor: pointer;
+  padding: 6px;
 }
 
-/* line 12, ../scss/style.scss */
+/* line 19, ../scss/style.scss */
 .main-input .date {
   width: 150px;
 }
 
-/* line 15, ../scss/style.scss */
+/* line 22, ../scss/style.scss */
 .buttons {
   margin: 10px 0;
   text-align: left;
+}
+
+/* line 26, ../scss/style.scss */
+.checkbox label {
+  width: 100%;
 }

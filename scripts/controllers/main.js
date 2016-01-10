@@ -1,16 +1,51 @@
-app.controller('mainController', function($scope, $firebaseArray) {
+app.controller('mainController', function($scope, $firebaseArray, $filter, AuthService, AUTH_EVENTS) {
+	// Datepicker init
+	$scope.minDate = new Date();
+	$scope.loginInfo = null;
+
   var ref = new Firebase("https://thetodo.firebaseio.com/tasks");
+
   // download the data into a local object
   $scope.tasks = $firebaseArray(ref);
 
+	$scope.username = AuthService.username();
+ 
+  $scope.$on(AUTH_EVENTS.notAuthorized, function(event) {
+    console.log('Unauthorized !');
+  });
+
+  $scope.$on(AUTH_EVENTS.notAuthenticated, function(event) {
+    AuthService.logout();
+    // $state.go('login');
+    console.log('Session lost !');
+  });
+ 
+  $scope.setCurrentUsername = function(name) {
+    $scope.username = name;
+  }
+
+  $scope.login = function(data) {
+    AuthService.login(data.username, data.password).then(function(authenticated) {
+      $scope.setCurrentUsername(data.username);
+    }, function(err) {
+      var alertPopup = $ionicPopup.alert({
+        title: 'Login failed!',
+        template: 'Please check your credentials!'
+      });
+    });
+  }
+  
+
   $scope.add = function() {
     var text = $scope.task;
-    console.log($scope.date);
+
+    var selectDate = $filter('date')($scope.date,'yyyy-MM-dd');
+    console.log(selectDate);
     text = text.trim();
     if (text.length > 0) {
   		$scope.tasks.$add({
         task:text,
-        date:$scope.date,
+        date:selectDate,
         done:false
       });
     }
@@ -27,7 +62,7 @@ app.controller('mainController', function($scope, $firebaseArray) {
 		});
 	};
 });
-
+/*
 app.directive('myDirective', function($compile) {
   return {
     restrict: 'E',
@@ -59,3 +94,4 @@ app.directive('mydatepicker', function($parse) {
     }
   }
 });
+*/

@@ -3,8 +3,9 @@
     <form>
     	<div class="input-group main-input">
 	    	<input type="text" ng-model="task" class="form-control task" size="50" placeholder="Add Task">
+
 	    	<div class="input-group-btn">
-	    		<my-directive my-directive-var="date" value="123"></my-directive>
+	    		<input type="text" class="form-control date" uib-datepicker-popup="yyyy-MM-dd" min-date="minDate" ng-model="date" ng-required="true" close-text="Close" show-weeks="false" is-open="opened" ng-focus="opened=true" />
 	    	</div>
 	    </div>
 	    <div class="buttons">
@@ -13,14 +14,14 @@
 	    </div>
 	</form>
 
-	<ul ng-repeat="x in noteList" class="things">
-		<li>
+	<ul class="things">
+		<li ng-repeat="x in tasks track by $index">
 			<div class="checkbox checkbox-circle">
-	            <input id="checkbox1" class="styled" ng-model="x.done" type="checkbox">
-	            <label for="checkbox1">
-	                {{x.noteText}}
-	            </label>
-	        </div>
+        <input id="checkbox{{$index}}" class="styled" ng-model="x.done" type="checkbox">
+        <label for="checkbox{{$index}}">
+          {{x.task}}
+        </label>
+      </div>
 		</li>
 	</ul>
 </div>
