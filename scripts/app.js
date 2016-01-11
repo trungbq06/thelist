@@ -1,6 +1,4 @@
-'use strict';
-
-var app = angular.module('listApp', ['firebase', 'ngRoute', 'ui.bootstrap']);
+var app = angular.module('listApp', ['firebase', 'ui.router', 'ngRoute', 'ui.bootstrap']);
 
 app.constant('AUTH_EVENTS', {
   notAuthenticated: 'auth_not_authenticated',
@@ -14,12 +12,12 @@ app.config(function($stateProvider, $urlRouterProvider) {
   .state('home', {
     url: '/',
     templateUrl: 'views/main.html',
-    controller: 'mainController'
+    controller: 'MainController'
   })
   .state('login', {
     url: '/login',
     templateUrl: 'views/login.html',
-    controller: 'loginController'
+    controller: 'LoginController'
   });
 });
 
@@ -93,7 +91,7 @@ app.factory('AuthService', function ($http, $q, $window) {
 });
 
 app.run(function ($rootScope, $state, AuthService, AUTH_EVENTS) {
-  $rootScope.$on('$stateChangeStart', function (event,next, nextParams, fromState) {
+  $rootScope.$on('$stateChangeStart', function (event, next, nextParams, fromState) {
  
     if ('data' in next && 'authorizedRoles' in next.data) {
       var authorizedRoles = next.data.authorizedRoles;

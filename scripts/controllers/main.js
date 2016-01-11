@@ -1,4 +1,4 @@
-app.controller('mainController', function($scope, $firebaseArray, $filter, AuthService, AUTH_EVENTS) {
+app.controller('MainController', function($scope, $firebaseArray, $filter, AuthService, AUTH_EVENTS) {
 	// Datepicker init
 	$scope.minDate = new Date();
 	$scope.loginInfo = null;
