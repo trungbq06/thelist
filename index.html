@@ -16,6 +16,7 @@
 <!-- Angular Scripts -->
 <script src="scripts/app.js"></script>
 <script src="scripts/services.js"></script>
+<script src="scripts/run.js"></script>
 <script src="scripts/controllers/login.js"></script>
 <script src="scripts/controllers/main.js"></script>
 <!-- Styles -->
@@ -46,21 +47,12 @@
   <div class="container">
     <div class="row row-sidebar">
       <!-- sidebar -->
-      <div class="col-xs-6 col-sm-3 sidebar-left" id="sidebar" role="navigation">
-          <ul class="nav">
-            <li class="active"><a href="#">Today</a></li>
-            <li><a href="#">Tomorrow</a></li>
-            <li><a href="#">Thursday</a></li>
-            <li><a href="#">Friday</a></li>   
-            <li><a href="#">Saturday</a></li>   
-            <li><a href="#">Sunday</a></li>   
-          </ul>
-      </div>
+      <div ui-view="columnSidebar"></div>
       
       <!-- main area -->
       <div class="col-xs-12 col-sm-9" id="content">
         <!-- Angular layout template where content will be injected -->
-        <div ng-view></div>
+        <div ui-view></div>
       </div><!-- /.col-xs-12 main -->
     </div><!--/.row-->
   </div><!--/.container-->

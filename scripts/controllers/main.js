@@ -19,22 +19,6 @@ app.controller('MainController', function($scope, $firebaseArray, $filter, AuthS
     // $state.go('login');
     console.log('Session lost !');
   });
- 
-  $scope.setCurrentUsername = function(name) {
-    $scope.username = name;
-  }
-
-  $scope.login = function(data) {
-    AuthService.login(data.username, data.password).then(function(authenticated) {
-      $scope.setCurrentUsername(data.username);
-    }, function(err) {
-      var alertPopup = $ionicPopup.alert({
-        title: 'Login failed!',
-        template: 'Please check your credentials!'
-      });
-    });
-  }
-  
 
   $scope.add = function() {
     var text = $scope.task;

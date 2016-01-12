@@ -41,3 +41,10 @@ ul.things li {
 .checkbox label {
   width: 100%;
 }
+
+/* line 29, ../scss/style.scss */
+.social-buttons {
+  width: 30%;
+  text-align: center;
+  margin: 50px auto;
+}
