@@ -1,11 +1,11 @@
-app.factory('FireAuth', function($firebaseAuth) {
+app.factory('Auth', function($firebaseAuth) {
   var endPoint = 'https://thetodo.firebaseio.com/';
   var usersRef = new Firebase(endPoint);
 
   return $firebaseAuth(usersRef);
 });
 
-app.factory('AuthService', function ($firebaseAuth, $http, $q, $window) {
+app.factory('UserService', function ($firebaseAuth, $http, $q, $window) {
   var LOCAL_USER_KEY = 'local_user';
   var username = '';
   var isAuthenticated = false;
