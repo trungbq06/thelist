@@ -11,8 +11,11 @@ app.config(function($stateProvider, $urlRouterProvider) {
         templateUrl: 'views/main.html',
         controller: 'MainController'
       },
-      'columnSidebar@home': {
+      'columnSidebar': {
         templateUrl: 'views/sidebar.html'
+      },
+      'userProfile': {
+        templateUrl: 'views/user_profile.html'
       }
     }
   })
@@ -20,5 +23,9 @@ app.config(function($stateProvider, $urlRouterProvider) {
     url: '/login',
     templateUrl: 'views/login.html',
     controller: 'LoginController'
-  });
+  })
+  .state('logout', {
+    url: '/logout',
+    controller: 'LogoutController'
+  })
 });

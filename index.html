@@ -18,6 +18,7 @@
 <script src="scripts/services.js"></script>
 <script src="scripts/run.js"></script>
 <script src="scripts/controllers/login.js"></script>
+<script src="scripts/controllers/logout.js"></script>
 <script src="scripts/controllers/main.js"></script>
 <!-- Styles -->
 <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
@@ -41,15 +42,7 @@
            </button>
            <a class="navbar-brand" href="#">The List</a>
         </div>
-        <ul class="nav navbar-nav navbar-right">
-          <li class="dropdown open">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <span class="glyphicon glyphicon-user"></span>&nbsp;
-              <strong>Nombre</strong>
-              <span class="glyphicon glyphicon-chevron-down"></span>
-            </a>
-          </li>
-        </ul>
+        <div ui-view="userProfile"></div>
       </div>
     </div>
       

@@ -7,5 +7,6 @@ app.run(function ($rootScope, $state, UserService) {
         $state.go('login');
       }
     }
+    
   });
 });
