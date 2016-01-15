@@ -1,4 +1,4 @@
-app.controller('MainController', function($scope, $firebaseArray, $filter, UserService, AUTH_EVENTS) {
+app.controller('MainController', function($scope, $state, $firebaseArray, $filter, UserService) {
 	// Datepicker init
 	$scope.minDate = new Date();
 	$scope.loginInfo = null;
@@ -7,18 +7,6 @@ app.controller('MainController', function($scope, $firebaseArray, $filter, UserS
 
   // download the data into a local object
   $scope.tasks = $firebaseArray(ref);
-
-	$scope.username = UserService.username();
- 
-  $scope.$on(AUTH_EVENTS.notAuthorized, function(event) {
-    console.log('Unauthorized !');
-  });
-
-  $scope.$on(AUTH_EVENTS.notAuthenticated, function(event) {
-    UserService.logout();
-    // $state.go('login');
-    console.log('Session lost !');
-  });
 
   $scope.add = function() {
     var text = $scope.task;

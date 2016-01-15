@@ -1,20 +1,20 @@
-app.controller('LoginController', function($scope, $firebaseArray, $filter, Auth, UserService, AUTH_EVENTS) {
+app.controller('LoginController', function($scope, $state, $firebaseArray, $filter, Auth, UserService) {
+
+  // Logout user
+  // Auth.$unauth();
 
   $scope.setCurrentUsername = function(name) {
     $scope.username = name;
   }
 
-  $scope.facebook_login = function() {
-    Auth.$authWithOAuthRedirect('facebook').then(function(authData) {
-      console.log('Logged In ' + authData.uid);
+  $scope.login = function(authMethod) {
+    Auth.$authWithOAuthPopup(authMethod).then(function(authData) {
+      console.log('Logged In ' + authData.email);
+
+      UserService.storeUserCredentials(authData);
+      $state.go('home');
     }).catch(function(error) {
-      if (error.code === 'TRANSPORT_UNAVAILABLE') {
-        Auth.$authWithOAuthPopup('facebook').then(function(authData) {
-          console.log('Logged In ' + authData.uid);
-        });
-      } else {
-        console.log(error);
-      }
+      console.log(error);
     });
   }
 
@@ -22,7 +22,10 @@ app.controller('LoginController', function($scope, $firebaseArray, $filter, Auth
     if (authData === null) {
       console.log('Not logged in yet');
     } else {
-      console.log('Logged in as', authData.uid);
+      console.log('Logged in as', authData);
+
+      UserService.storeUserCredentials(authData);
+      $state.go('home');
     }
     // This will display the user's name in our view
     $scope.authData = authData;

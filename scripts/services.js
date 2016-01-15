@@ -7,7 +7,9 @@ app.factory('Auth', function($firebaseAuth) {
 
 app.factory('UserService', function ($firebaseAuth, $http, $q, $window) {
   var LOCAL_USER_KEY = 'local_user';
-  var username = '';
+  var userid = '';
+  var provider = '';
+  var profileImageURL = '';
   var isAuthenticated = false;
   var role = '';
   var authToken;
@@ -18,19 +20,25 @@ app.factory('UserService', function ($firebaseAuth, $http, $q, $window) {
       useCredentials(authData);
     }
   }
- 
+
   function storeUserCredentials(authData) {
     window.localStorage.setItem(LOCAL_USER_KEY, authData);
+
     useCredentials(authData);
   }
 
-  function useCredentials(authData) {
-    username = authData.email;
+  var useCredentials = function (authData) {
+    userid = authData.uid;
+    provider = authData.provider;
+    profileImageURL = authData.profileImageURL;
+
+    isAuthenticated = true;
   }
- 
+
   function destroyUserCredentials() {
     authToken = undefined;
-    username = '';
+    userid = '';
+    provider = '';
     isAuthenticated = false;
     window.localStorage.removeItem(LOCAL_USER_KEY);
   }
@@ -39,20 +47,17 @@ app.factory('UserService', function ($firebaseAuth, $http, $q, $window) {
     destroyUserCredentials();
   };
  
-  var isAuthorized = function(authorizedRoles) {
-    if (!angular.isArray(authorizedRoles)) {
-      authorizedRoles = [authorizedRoles];
-    }
-    return (isAuthenticated && authorizedRoles.indexOf(role) !== -1);
-  };
- 
   loadUserCredentials();
 
   return {
     logout: logout,
-    isAuthorized: isAuthorized,
+    storeUserCredentials: function(authData) {
+      storeUserCredentials(authData);
+    },
     isAuthenticated: function() {return isAuthenticated;},
-    username: function() {return username;},
+    userid: function() {return userid;},
+    provider: function() {return userid;},
+    profileImageURL: function() {return userid;},
     role: function() {return role;}
   };
 });
