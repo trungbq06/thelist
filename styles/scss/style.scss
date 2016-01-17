@@ -31,3 +31,32 @@ ul.things li {
   text-align: center;
   margin: 50px auto;
 }
+.navbar-default {
+  .navbar-nav {
+    .open {
+      a {
+        span, .username, :focus, :hover {
+          color: #555 !important;
+        }
+      }
+    }
+    li {
+      a {
+        span {
+          color: #fff;
+        }
+        .username {
+          color: #fff;
+        }
+      }
+    }
+  }
+}
+.main-title {
+  float: left;
+  width: 80%;
+  text-align: center;
+  color: #fff;
+  font-size: 120%;
+  line-height: 50px;
+}

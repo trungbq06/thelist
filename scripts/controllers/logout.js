@@ -1,8 +1,10 @@
 app.controller('LogoutController', function($scope, $state, $firebaseArray, $filter, Auth, UserService) {
 
-  console.log('Logging out');
+  // Logout current user
   Auth.$unauth();
+  UserService.logout();
 
+  // Redirect to login
   $state.go('login');
 
 });

@@ -48,3 +48,26 @@ ul.things li {
   text-align: center;
   margin: 50px auto;
 }
+
+/* line 38, ../scss/style.scss */
+.navbar-default .navbar-nav .open a span, .navbar-default .navbar-nav .open a .username, .navbar-default .navbar-nav .open a :focus, .navbar-default .navbar-nav .open a :hover {
+  color: #555 !important;
+}
+/* line 45, ../scss/style.scss */
+.navbar-default .navbar-nav li a span {
+  color: #fff;
+}
+/* line 48, ../scss/style.scss */
+.navbar-default .navbar-nav li a .username {
+  color: #fff;
+}
+
+/* line 55, ../scss/style.scss */
+.main-title {
+  float: left;
+  width: 80%;
+  text-align: center;
+  color: #fff;
+  font-size: 120%;
+  line-height: 50px;
+}

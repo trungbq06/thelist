@@ -2,15 +2,15 @@
 	<br>
     <form>
     	<div class="input-group main-input">
-	    	<input type="text" ng-model="task" class="form-control task" size="50" placeholder="Add Task">
+	    	<input type="text" ng-model="task" class="form-control task" size="50" placeholder="Add Task" ng-show="checkInbox()">
 
 	    	<div class="input-group-btn">
-	    		<input type="text" class="form-control date" uib-datepicker-popup="yyyy-MM-dd" min-date="minDate" ng-model="date" ng-required="true" close-text="Close" show-weeks="false" is-open="opened" ng-focus="opened=true" />
+	    		<input type="text" class="form-control date" uib-datepicker-popup="yyyy-MM-dd" min-date="minDate" ng-model="date" ng-required="true" close-text="Close" show-weeks="false" is-open="opened" ng-focus="opened=true" ng-show="checkInbox()"/>
 	    	</div>
 	    </div>
 	    <div class="buttons">
-	    	<button type="button" class="btn btn-info" ng-click="add()">Add Task</button>
-	    	<button type="button" class="btn btn-link">Cancel</button>
+	    	<button type="button" class="btn btn-info" ng-show="checkTask()" ng-hide="!checkTask()" ng-click="add()">Add Task</button>
+	    	<button type="button" class="btn btn-link" ng-show="checkTask()" ng-hide="!checkTask()"  ng-click="cancel()">Cancel</button>
 	    </div>
 	</form>
 

@@ -1,3 +1,6 @@
+/**
+* Auth factory from firebase to login and logout social network
+*/
 app.factory('Auth', function($firebaseAuth) {
   var endPoint = 'https://thetodo.firebaseio.com/';
   var usersRef = new Firebase(endPoint);
@@ -5,59 +8,109 @@ app.factory('Auth', function($firebaseAuth) {
   return $firebaseAuth(usersRef);
 });
 
-app.factory('UserService', function ($firebaseAuth, $http, $q, $window) {
-  var LOCAL_USER_KEY = 'local_user';
+/**
+* UserService to store and manipulate user login and logout
+*/
+app.factory('UserService', function ($http, $q, $window, $localStorage) {
+
+  // User variable
   var userid = '';
   var provider = '';
   var profileImageURL = '';
-  var isAuthenticated = false;
-  var role = '';
-  var authToken;
+  var username = '';
 
-  function loadUserCredentials() {
-    var authData = window.localStorage.getItem(LOCAL_USER_KEY);
+  // Check if user logged in or not
+  var isAuthenticated = false;
+
+  /**
+  * Load user from local storage
+  */
+  function loadUser() {
+    var authData = $localStorage.local_user;
+
     if (authData) {
-      useCredentials(authData);
+      login(authData);
     }
   }
 
-  function storeUserCredentials(authData) {
-    window.localStorage.setItem(LOCAL_USER_KEY, authData);
+  // Store user to local storage
+  function storeUser(authData) {
+    $localStorage.local_user = authData;
 
-    useCredentials(authData);
+    login(authData);
   }
 
-  var useCredentials = function (authData) {
+  /**
+  * Login social network
+  */
+  var login = function (authData) {
     userid = authData.uid;
     provider = authData.provider;
     profileImageURL = authData.profileImageURL;
 
+    if (provider === 'facebook') {
+      username = authData.facebook.displayName;
+    } else if (provider === 'google') {
+      username = authData.google.displayName;
+    } else if (provider === 'twitter') {
+      username = authData.twitter.displayName;
+    }
+
     isAuthenticated = true;
   }
 
-  function destroyUserCredentials() {
-    authToken = undefined;
+  /**
+  * Destroy all local data when user logout
+  */
+  function destroy() {
     userid = '';
+    username = '';
     provider = '';
     isAuthenticated = false;
-    window.localStorage.removeItem(LOCAL_USER_KEY);
+
+    $localStorage.local_user = null;
   }
 
+  /**
+  * Logout user from social network
+  */
   var logout = function() {
-    destroyUserCredentials();
+    destroy();
   };
- 
-  loadUserCredentials();
 
+  /**
+  * Return UserService object
+  */
   return {
     logout: logout,
-    storeUserCredentials: function(authData) {
-      storeUserCredentials(authData);
+    login: function(authData) {
+      storeUser(authData);
     },
     isAuthenticated: function() {return isAuthenticated;},
     userid: function() {return userid;},
+    username: function() {return username;},
     provider: function() {return userid;},
     profileImageURL: function() {return userid;},
-    role: function() {return role;}
+    loadUser: function() {loadUser();}
   };
+});
+
+app.factory('Task', function($firebaseAuth) {
+  var endPoint = 'https://thetodo.firebaseio.com/tasks/';
+  var taskRef = new Firebase(endPoint);
+
+  return taskRef;
+});
+
+app.factory('TaskService', function ($firebaseArray, Task, UserService) {
+
+  var findByUser = function() {
+    return $firebaseArray(Task.orderByChild('userid').equalTo(UserService.userid()));
+  }
+
+  return {
+    findByUser: function() {
+      return findByUser();
+    }
+  }
 });

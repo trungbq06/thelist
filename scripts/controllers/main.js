@@ -1,30 +1,73 @@
-app.controller('MainController', function($scope, $state, $firebaseArray, $filter, UserService) {
+app.controller('MainController', function($scope, $rootScope, $state, $stateParams, $firebaseObject, $firebaseArray, $filter, UserService, TaskService) {
+
+  $scope.sdate = $stateParams.sdate;
+  $rootScope.username = UserService.username();
+  $rootScope.main_title = 'Inbox';
 	// Datepicker init
-	$scope.minDate = new Date();
-	$scope.loginInfo = null;
+  $scope.inboxSelected = true;
+  $scope.date = new Date();
+  $scope.today = new Date();
+  $scope.nextDate = new Date();
+  $scope.nextDate.setDate($scope.today.getDate() + 1);
 
-  var ref = new Firebase("https://thetodo.firebaseio.com/tasks");
+  $scope.weeks = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
-  // download the data into a local object
-  $scope.tasks = $firebaseArray(ref);
+  $scope.nextDates = [];
+  for (var i = 2;i <= 5;i++) {
+    $scope.nDate = new Date();
+    $scope.nDate.setDate($scope.today.getDate() + i);
+    $scope.nextDates.push($scope.nDate);
+  }
+
+  $scope.tasks = TaskService.findByUser();
+  if ($scope.sdate) {
+    $scope.inboxSelected = false;
+
+    // Filter tasks by date
+    $scope.tasks.forEach(function(data) {
+      console.log(data);
+    })
+  }
 
   $scope.add = function() {
     var text = $scope.task;
 
     var selectDate = $filter('date')($scope.date,'yyyy-MM-dd');
-    console.log(selectDate);
     text = text.trim();
-    if (text.length > 0) {
+    if (text.length > 0 && selectDate.length > 0) {
   		$scope.tasks.$add({
+        userid:UserService.userid(),
         task:text,
         date:selectDate,
         done:false
       });
     }
 
-    $scope.task = "";
-    $scope.date = "";
+    $scope.task = '';
+    $scope.date = '';
 	};
+
+  $scope.cancel = function() {
+    $scope.task = '';
+    $scope.date = '';
+  }
+
+  $scope.checkTask = function() {
+    return $scope.task;
+  }
+
+  $scope.selectInbox = function() {
+    $scope.inboxSelected = true;
+  }
+
+  $scope.select = function(title) {
+    $rootScope.main_title = title;
+    console.log($rootScope.main_title);
+  }
+
+  $scope.checkInbox = function() {
+    return $scope.inboxSelected;
+  }
 
 	$scope.remove = function() {
 		var oldList = $scope.tasks;
@@ -34,36 +77,3 @@ app.controller('MainController', function($scope, $state, $firebaseArray, $filte
 		});
 	};
 });
-/*
-app.directive('myDirective', function($compile) {
-  return {
-    restrict: 'E',
-    scope: {
-      myDirectiveVar: '=',
-    },
-    template: '<input class="form-control date" ng-model="myDirectiveVar" value="123">',
-    replace: true,
-    link: function($scope, elem, attr, ctrl) {
-      $(elem).val('Testing');
-    }
-  };
-});
-
-app.directive('mydatepicker', function($parse) {
-  return {
-    restrict: 'E',    
-    scope:{
-      varDate:'='
-    },
-    template: '<input type="text" size="50" class="form-control date" ng-model="varDate" />',
-    replace: true,
-    link: function($scope, elem, attr, ctrl) {
-      // $(elem).datepicker({
-      //   startDate: new Date(),
-      //   todayHighlight: true,
-      //   autoclose: true          
-      // });
-    }
-  }
-});
-*/
