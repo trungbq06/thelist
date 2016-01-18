@@ -2,7 +2,6 @@ app.controller('MainController', function($scope, $rootScope, $state, $statePara
 
   $scope.sdate = $stateParams.sdate;
   $rootScope.username = UserService.username();
-  $rootScope.main_title = 'Inbox';
 	// Datepicker init
   $scope.inboxSelected = true;
   $scope.date = new Date();
@@ -19,14 +18,16 @@ app.controller('MainController', function($scope, $rootScope, $state, $statePara
     $scope.nextDates.push($scope.nDate);
   }
 
-  $scope.tasks = TaskService.findByUser();
   if ($scope.sdate) {
     $scope.inboxSelected = false;
 
-    // Filter tasks by date
-    $scope.tasks.forEach(function(data) {
-      console.log(data);
-    })
+    $scope.tasks = TaskService.findByDate($scope.sdate);
+  } else {
+    $scope.tasks = TaskService.findAll();
+  }
+
+  if (!$rootScope.main_title) {
+    $rootScope.main_title = 'Inbox';
   }
 
   $scope.add = function() {
@@ -36,10 +37,10 @@ app.controller('MainController', function($scope, $rootScope, $state, $statePara
     text = text.trim();
     if (text.length > 0 && selectDate.length > 0) {
   		$scope.tasks.$add({
-        userid:UserService.userid(),
         task:text,
         date:selectDate,
-        done:false
+        done:0,
+        date_done: selectDate + '_' + 0
       });
     }
 

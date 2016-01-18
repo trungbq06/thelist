@@ -95,8 +95,8 @@ app.factory('UserService', function ($http, $q, $window, $localStorage) {
   };
 });
 
-app.factory('Task', function($firebaseAuth) {
-  var endPoint = 'https://thetodo.firebaseio.com/tasks/';
+app.factory('Task', function($firebaseAuth, UserService) {
+  var endPoint = 'https://thetodo.firebaseio.com/tasks/' + UserService.userid();
   var taskRef = new Firebase(endPoint);
 
   return taskRef;
@@ -104,13 +104,20 @@ app.factory('Task', function($firebaseAuth) {
 
 app.factory('TaskService', function ($firebaseArray, Task, UserService) {
 
-  var findByUser = function() {
-    return $firebaseArray(Task.orderByChild('userid').equalTo(UserService.userid()));
+  var findAll = function() {
+    return $firebaseArray(Task.orderByChild('done').equalTo(0));
+  }
+
+  var findByDate = function(date) {
+    return $firebaseArray(Task.orderByChild('date_done').equalTo(date + '_' + 0));
   }
 
   return {
-    findByUser: function() {
-      return findByUser();
+    findByDate: function(date) {
+      return findByDate(date);
+    },
+    findAll: function() {
+      return findAll();
     }
   }
 });
