@@ -9,6 +9,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
   .state('home', {
     url: '/',
+    cache: false,
     views: {
       '' : {
         templateUrl: 'views/main.html',

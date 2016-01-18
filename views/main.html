@@ -17,7 +17,7 @@
 	<ul class="things">
 		<li ng-repeat="x in tasks track by $index">
 			<div class="checkbox checkbox-circle">
-        <input id="checkbox{{$index}}" class="styled" ng-model="x.done" type="checkbox">
+        <input id="checkbox{{$index}}" class="styled" ng-model="x.done" type="checkbox" ng-click="toggleCompleted(x)">
         <label for="checkbox{{$index}}">
           {{x.task}}
         </label>

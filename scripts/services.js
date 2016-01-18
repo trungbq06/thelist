@@ -105,11 +105,11 @@ app.factory('Task', function($firebaseAuth, UserService) {
 app.factory('TaskService', function ($firebaseArray, Task, UserService) {
 
   var findAll = function() {
-    return $firebaseArray(Task.orderByChild('done').equalTo(0));
+    return $firebaseArray(Task.orderByChild('done').equalTo(false));
   }
 
   var findByDate = function(date) {
-    return $firebaseArray(Task.orderByChild('date_done').equalTo(date + '_' + 0));
+    return $firebaseArray(Task.orderByChild('date_done').equalTo(date + '_' + false));
   }
 
   return {

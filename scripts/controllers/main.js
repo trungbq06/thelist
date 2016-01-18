@@ -1,4 +1,4 @@
-app.controller('MainController', function($scope, $rootScope, $state, $stateParams, $firebaseObject, $firebaseArray, $filter, UserService, TaskService) {
+app.controller('MainController', function($scope, $rootScope, $state, $stateParams, $firebaseObject, $window, $firebaseArray, $filter, UserService, TaskService) {
 
   $scope.sdate = $stateParams.sdate;
   $rootScope.username = UserService.username();
@@ -39,14 +39,20 @@ app.controller('MainController', function($scope, $rootScope, $state, $statePara
   		$scope.tasks.$add({
         task:text,
         date:selectDate,
-        done:0,
-        date_done: selectDate + '_' + 0
+        done:false,
+        date_done: selectDate + '_' + false
       });
     }
 
     $scope.task = '';
-    $scope.date = '';
+    $scope.date = new Date();
 	};
+
+  $scope.toggleCompleted = function(task) {
+    // Update task
+    task.date_done = task.date + '_' + task.done;
+    $scope.tasks.$save(task);
+  }
 
   $scope.cancel = function() {
     $scope.task = '';
@@ -63,7 +69,6 @@ app.controller('MainController', function($scope, $rootScope, $state, $statePara
 
   $scope.select = function(title) {
     $rootScope.main_title = title;
-    console.log($rootScope.main_title);
   }
 
   $scope.checkInbox = function() {
