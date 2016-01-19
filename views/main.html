@@ -14,14 +14,21 @@
 	    </div>
 	</form>
 
-	<ul class="things">
-		<li ng-repeat="x in tasks track by $index">
-			<div class="checkbox checkbox-circle">
-        <input id="checkbox{{$index}}" class="styled" ng-model="x.done" type="checkbox" ng-click="toggleCompleted(x)">
-        <label for="checkbox{{$index}}">
-          {{x.task}}
-        </label>
-      </div>
-		</li>
-	</ul>
+	<div class="days" ng-repeat="date in nextDates" ng-hide="isSelectingDate(date)">
+    <h2 class="section-header {{hasTask(date)}}">
+      {{showDate(date)}}
+      <span>{{showDateDetail(date)}}</span>
+    </h2>
+  	<ul class="things">
+  		<li ng-repeat="x in tasks track by $index" ng-hide="!checkDate(date, x)">
+  			<div ng-if="checkDate(date, x)" class="checkbox checkbox-circle">
+          <input id="checkbox{{$index}}" class="styled" ng-model="x.done" type="checkbox" ng-click="toggleCompleted(x)">
+          <label for="checkbox{{$index}}" class="{{x.done == true ? 'done' : ''}}">
+            {{x.task}}
+            <span ng-show="x.done" ng-click="remove(x)"><i class="fa fa-times fa-2"></i></span>
+          </label>
+      	</div>
+  		</li>
+  	</ul>
+  </div>
 </div>

@@ -3,13 +3,12 @@ var app = angular.module('listApp', ['firebase', 'ui.router', 'ngStorage', 'ngRo
 /**
 * Config main routes for our app
 */
-app.config(function($stateProvider, $urlRouterProvider) {
+app.config(function($stateProvider, $locationProvider, $urlRouterProvider) {
   $urlRouterProvider.otherwise('/');
 
   $stateProvider
   .state('home', {
     url: '/',
-    cache: false,
     views: {
       '' : {
         templateUrl: 'views/main.html',
@@ -46,5 +45,6 @@ app.config(function($stateProvider, $urlRouterProvider) {
         templateUrl: 'views/user_profile.html'
       }
     }
-  })
+  });
+  
 });

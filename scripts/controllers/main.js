@@ -5,13 +5,15 @@ app.controller('MainController', function($scope, $rootScope, $state, $statePara
 	// Datepicker init
   $scope.inboxSelected = true;
   $scope.date = new Date();
+  $scope.nextDates = [];
   $scope.today = new Date();
   $scope.nextDate = new Date();
   $scope.nextDate.setDate($scope.today.getDate() + 1);
 
   $scope.weeks = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  $scope.nextDates.push($scope.today);
+  $scope.nextDates.push($scope.nextDate);
 
-  $scope.nextDates = [];
   for (var i = 2;i <= 5;i++) {
     $scope.nDate = new Date();
     $scope.nDate.setDate($scope.today.getDate() + i);
@@ -75,11 +77,52 @@ app.controller('MainController', function($scope, $rootScope, $state, $statePara
     return $scope.inboxSelected;
   }
 
-	$scope.remove = function() {
-		var oldList = $scope.tasks;
-		$scope.tasks = [];
-		angular.forEach(oldList, function(x) {
-		    if (!x.done) $scope.tasks.push(x);
-		});
-	};
+	$scope.remove = function(task) {
+		$scope.tasks.$remove(task);
+	}
+
+  $scope.checkDate = function(date, task) {
+    date = $scope.formatDate(date);
+
+    return date == task.date;
+  }
+
+  $scope.showDate = function(date) {
+    if (date == $scope.today) {
+      return 'Today';
+    } else if (date == $scope.nextDate) {
+      return 'Tomorrow';
+    } else {
+      return $scope.weeks[date.getDay()];
+    }
+  }
+
+  $scope.showDateDetail = function(date) {
+
+  }
+
+  $scope.hasTask = function(date) {
+    date = $scope.formatDate(date);
+    var isTask = false;
+    $scope.tasks.forEach(function(data) {
+      if (data.date == date) {
+        isTask = true;
+        return;
+      }
+    });
+
+    return isTask ? '' : 'no-task';
+  }
+
+  $scope.formatDate = function(date) {
+    return date.getFullYear() + '-' + ( '0' + (date.getMonth() + 1)).slice(-2) + '-' + date.getDate();
+  }
+
+  $scope.isSelectingDate = function(date) {
+    if ($scope.sdate) {
+      date = $scope.formatDate(date);
+
+      return $scope.sdate != date;
+    }
+  }
 });

@@ -10,7 +10,7 @@
 
 /* line 7, ../scss/style.scss */
 ul.things {
-  padding: 10px 0;
+  padding: 5px 0;
 }
 
 /* line 10, ../scss/style.scss */
@@ -50,7 +50,7 @@ ul.things li {
 }
 
 /* line 38, ../scss/style.scss */
-.navbar-default .navbar-nav .open a span, .navbar-default .navbar-nav .open a .username, .navbar-default .navbar-nav .open a :focus, .navbar-default .navbar-nav .open a :hover {
+.navbar-default .navbar-nav .open a span, .navbar-default .navbar-nav .open a strong.username, .navbar-default .navbar-nav .open a:focus, .navbar-default .navbar-nav .open a:hover {
   color: #555 !important;
 }
 /* line 45, ../scss/style.scss */
@@ -58,7 +58,7 @@ ul.things li {
   color: #fff;
 }
 /* line 48, ../scss/style.scss */
-.navbar-default .navbar-nav li a .username {
+.navbar-default .navbar-nav li a strong.username {
   color: #fff;
 }
 
@@ -70,4 +70,37 @@ ul.things li {
   color: #fff;
   font-size: 120%;
   line-height: 50px;
+}
+
+/* line 64, ../scss/style.scss */
+.checkbox label.done {
+  text-decoration: line-through;
+  color: lightgray;
+}
+/* line 68, ../scss/style.scss */
+.checkbox span {
+  float: right;
+  width: 20px;
+  height: 20px;
+  text-align: center;
+}
+/* line 73, ../scss/style.scss */
+.checkbox span:hover {
+  color: #000;
+}
+
+/* line 78, ../scss/style.scss */
+h2 {
+  font-size: 20px;
+  color: #000;
+  text-align: left;
+  margin: 10px 0;
+}
+/* line 83, ../scss/style.scss */
+h2.section-header {
+  color: #000;
+}
+/* line 86, ../scss/style.scss */
+h2.no-task {
+  color: #969696;
 }

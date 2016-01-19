@@ -5,7 +5,6 @@ app.run(function ($rootScope, $state, Auth, UserService) {
 
   // Trigger when state change start
   $rootScope.$on('$stateChangeStart', function (event, next, nextParams, fromState) {
-    
     if (!UserService.isAuthenticated()) {
       if (next.name !== 'login') {
         event.preventDefault();

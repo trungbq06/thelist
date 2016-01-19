@@ -3,14 +3,8 @@
     <li class="active">
       <a href="#/" ng-click="selectInbox()">Inbox</a>
     </li>
-    <li>
-      <a href="#/date/{{today.getFullYear() + '-' + ( '0' + (today.getMonth() + 1)).slice(-2) + '-' + today.getDate()}}" ng-click="select('Today')">Today</a>
-    </li>
-    <li>
-    	<a href="#/date/{{nextDate.getFullYear() + '-' + ( '0' + (nextDate.getMonth() + 1)).slice(-2) + '-' + nextDate.getDate()}}" ng-click="select('Tomorrow')">Tomorrow</a>
-	  </li>
 	  <li ng-repeat="nextDate in nextDates">
-    	<a href="#/date/{{nextDate.getFullYear() + '-' + ( '0' + (nextDate.getMonth() + 1)).slice(-2) + '-' + nextDate.getDate()}}" ng-click="select(weeks[nextDate.getDay()])">{{weeks[nextDate.getDay()]}}</a>
+    	<a href="#/date/{{nextDate.getFullYear() + '-' + ( '0' + (nextDate.getMonth() + 1)).slice(-2) + '-' + nextDate.getDate()}}" ng-click="select(showDate(nextDate))">{{showDate(nextDate)}}</a>
 	  </li>
   </ul>
 </div>
